@@ -36,7 +36,7 @@ neighbor 6.156.0.1 update-source lo
 neighbor 6.158.0.1 remote-as 6
 neighbor 6.158.0.1 update-source lo
 neighbor 179.5.6.2 remote-as 5
-neighbor 179.5.6.2 description UPSTREAM_AS5
+neighbor 179.5.6.2 description PEER _AS5
 
 network 6.0.0.0/8
 neighbor 6.151.0.1 next-hop-self
