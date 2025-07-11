@@ -5,7 +5,7 @@ interface host
 ip address 6.104.0.2/24
 exit
 interface ixp_82
-ip address 108.82.0.8/24
+ip address 180.82.0.6/24
 exit
 interface lo
 ip address 6.154.0.1/24
@@ -42,10 +42,19 @@ neighbor 6.157.0.1 remote-as 6
 neighbor 6.157.0.1 update-source lo
 neighbor 6.158.0.1 remote-as 6
 neighbor 6.158.0.1 update-source lo
-neighbor 180.82.0.82 route-map IN_BLOCK_DIFF_REGION in
-neighbor 180.82.0.82 route-map OUT_IXP out
+neighbor 180.82.0.82 remote-as 82
+neighbor 180.82.0.82 description PEER_IXP82
 
 network 6.0.0.0/8
+neighbor 6.151.0.1 next-hop-self
+neighbor 6.152.0.1 next-hop-self
+neighbor 6.153.0.1 next-hop-self
+neighbor 6.155.0.1 next-hop-self
+neighbor 6.156.0.1 next-hop-self
+neighbor 6.157.0.1 next-hop-self
+neighbor 6.158.0.1 next-hop-self
+neighbor 180.82.0.82 route-map IN_BLOCK_DIFF_REGION in
+neighbor 180.82.0.82 route-map OUT_IXP out
 exit
 
 router ospf
@@ -58,7 +67,8 @@ network 6.104.0.0/24 area 0
 network 6.154.0.0/24 area 0
 exit
 
-ip prefix-list ALLOWED_PREFIX_TO_IXP seq 5 permit 8.0.0.0/8
+ip prefix-list ALLOWED_PREFIX_TO_IXP seq 5 permit 6.0.0.0/8
+bgp community-list standard ALLOWED_TAG_TO_PEER seq 5 permit 6:300
 
 ip prefix-list NON_REGION_PREFIXES seq 5 permit 21.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 10 permit 22.0.0.0/8
@@ -74,14 +84,20 @@ ip prefix-list NON_REGION_PREFIXES seq 55 permit 32.0.0.0/8
 
 route-map IN_BLOCK_DIFF_REGION permit 10
 match ip address prefix-list NON_REGION_PREFIXES
+set community 6:200
 exit
+
 
 route-map IN_BLOCK_DIFF_REGION deny 20
 exit
 
 route-map OUT_IXP permit 10
 match ip address prefix-list ALLOWED_PREFIX_TO_IXP
-set community 82:21 82:22 82:23 82:24 82:25 82:26 82:27 82:28 82:29 82:30 82:31 82:32
+set community 82:21 82:22 82:23 82:24 82:25 82:26 82:27 82:28 82:29 82:30 82:31 82:32 additive
+route-map OUT_IXP permit 20
+match community ALLOWED_TAG_TO_PEER
+set community 82:21 82:22 82:23 82:24 82:25 82:26 82:27 82:28 82:29 82:30 82:31 82:32 additive
+
 exit
 
 exit
