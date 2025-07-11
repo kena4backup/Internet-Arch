@@ -79,6 +79,9 @@ route-map IN_AS8_CUSTOMER permit 10
 match ip address prefix-list ALLOWED_PREFIX_FROM_CUSTOMER
 set community 6:300
 
+route-map IN_AS8_CUSTOMER permit 20
+match ip address prefix-list ALLOWED_PREFIX_FROM_CUSTOMER
+set local-preference 300
 
 exit
 exit

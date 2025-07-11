@@ -85,6 +85,9 @@ ip prefix-list NON_REGION_PREFIXES seq 55 permit 32.0.0.0/8
 route-map IN_BLOCK_DIFF_REGION permit 10
 match ip address prefix-list NON_REGION_PREFIXES
 set community 6:200
+route-map IN_BLOCK_DIFF_REGION permit 20
+match ip address prefix-list NON_REGION_PREFIXES
+set local-preference 200
 exit
 
 

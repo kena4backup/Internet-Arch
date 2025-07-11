@@ -93,6 +93,8 @@ bgp community-list standard ALLOWED_TAG_TO_PROVIDER seq 5 permit 6:300
 
 route-map IN_AS4_PROVIDER permit 10
 set community 6:100
+route-map IN_AS4_PROVIDER permit 20
+set local-preference 100
 
 
 route-map OUT_AS4_PROVIDER permit 10

@@ -71,12 +71,20 @@ bgp community-list standard ALLOWED_TAG_TO_PROVIDER seq 5 permit 6:300
 route-map IN_AS3_PROVIDER permit 10
 set community 6:100
 
+route-map IN_AS3_PROVIDER permit 20
+set local-preference 100
+
 
 route-map OUT_AS3_PROVIDER permit 10
 match ip address prefix-list ALLOWED_TAG_TO_PROVIDER
 
 route-map OUT_AS3_PROVIDER permit 20
-match community ALLOWED_PREFIX_TO_PROVIDER
+match ip address prefix-list ALLOWED_PREFIX_TO_PROVIDER
+set as-path prepend 6 6 6
+
+route-map OUT_AS3_PROVIDER permit 30
+match ip address prefix-list ALLOWED_PREFIX_TO_PROVIDER
+ set metric 55
 
 exit
 

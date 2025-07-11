@@ -71,6 +71,10 @@ match community ALLOWED_TAG_TO_PEER
 route-map IN_AS5_PEER permit 10
 match ip address prefix-list ALLOWED_PREFIX_FROM_PEER
 set community 6:200
+
+route-map IN_AS5_PEER permit 20
+match ip address prefix-list ALLOWED_PREFIX_FROM_PEER
+set local-preference 200
 exit
 
 exit
