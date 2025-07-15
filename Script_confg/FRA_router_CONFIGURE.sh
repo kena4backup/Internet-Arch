@@ -71,16 +71,11 @@ ip prefix-list ALLOWED_PREFIX_TO_IXP seq 5 permit 6.0.0.0/8
 bgp community-list standard ALLOWED_TAG_TO_PEER seq 5 permit 6:300
 
 ip prefix-list NON_REGION_PREFIXES seq 5 permit 21.0.0.0/8
-ip prefix-list NON_REGION_PREFIXES seq 10 permit 22.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 15 permit 23.0.0.0/8
-ip prefix-list NON_REGION_PREFIXES seq 20 permit 24.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 25 permit 25.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 30 permit 27.0.0.0/8
-ip prefix-list NON_REGION_PREFIXES seq 35 permit 28.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 40 permit 29.0.0.0/8
-ip prefix-list NON_REGION_PREFIXES seq 45 permit 30.0.0.0/8
 ip prefix-list NON_REGION_PREFIXES seq 50 permit 31.0.0.0/8
-ip prefix-list NON_REGION_PREFIXES seq 55 permit 32.0.0.0/8
 
 route-map IN_BLOCK_DIFF_REGION permit 10
 match ip address prefix-list NON_REGION_PREFIXES
@@ -91,15 +86,16 @@ set local-preference 200
 exit
 
 
-route-map IN_BLOCK_DIFF_REGION deny 20
+route-map IN_BLOCK_DIFF_REGION deny 30
 exit
 
 route-map OUT_IXP permit 10
 match ip address prefix-list ALLOWED_PREFIX_TO_IXP
-set community 82:21 82:22 82:23 82:24 82:25 82:26 82:27 82:28 82:29 82:30 82:31 82:32 additive
+set community 82:21 82:23 82:25 82:27 82:29 82:31 additive
 route-map OUT_IXP permit 20
 match community ALLOWED_TAG_TO_PEER
-set community 82:21 82:22 82:23 82:24 82:25 82:26 82:27 82:28 82:29 82:30 82:31 82:32 additive
+set community 82:21 82:23 82:25 82:27 82:29 82:31 additive
+
 
 exit
 
@@ -111,3 +107,10 @@ EOF
 # scp -O -P 2006 ./FRA_router_CONFIGURE.sh root@mittelerde.vs.uni-kassel.de:/root/
 # ssh -p 2006 root@mittelerde.vs.uni-kassel.de "chmod +x /root/FRA_router_CONFIGURE.sh && /root/FRA_router_CONFIGURE.sh"
 # 2c7eac91273b7027
+
+# route-map TAG-CUSTOMER permit 5
+#  match ip address prefix-list 6:300
+#  set community 6:300
+# route-map TAG-CUSTOMER permit 10
+#  match ip address prefix-list 6:300
+#  set local-preference 300
