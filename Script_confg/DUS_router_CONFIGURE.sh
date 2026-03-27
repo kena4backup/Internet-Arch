@@ -15,6 +15,10 @@ ip address 6.200.0.2/24
 ip ospf cost 1
 exit
 
+interface ext_4_JOB
+ip address 179.4.6.6/24
+exit
+
 interface host
 ip address 6.102.0.2/24
 exit
@@ -57,6 +61,7 @@ router bgp 6
  neighbor 6.157.0.1 update-source lo
  neighbor 6.158.0.1 remote-as 6
  neighbor 6.158.0.1 update-source lo
+ neighbor 179.4.6.4 remote-as 4
  
 
  network 6.0.0.0/8
@@ -67,8 +72,8 @@ router bgp 6
  neighbor 6.156.0.1 next-hop-self
  neighbor 6.157.0.1 next-hop-self
  neighbor 6.158.0.1 next-hop-self
- neighbor 179.4.6.2 route-map IN_AS4_PROVIDER in
- neighbor 179.3.6.2 route-map OUT_AS4_PROVIDER out
+ neighbor 179.4.6.4 route-map IN_AS4_PROVIDER in
+ neighbor 179.4.6.4 route-map OUT_AS4_PROVIDER out
 
 exit
 
@@ -100,9 +105,13 @@ set local-preference 100
 route-map OUT_AS4_PROVIDER permit 10
 match ip address prefix-list ALLOWED_TAG_TO_PROVIDER
 
-route-map OUT_AS3_PROVIDER permit 20
+route-map OUT_AS4_PROVIDER permit 20
 match community ALLOWED_PREFIX_TO_PROVIDER
 exit
+
+route-map OUT_AS4_PROVIDER permit 30
+match ip address prefix-list ALLOWED_PREFIX_TO_PROVIDER
+set metric 200
 
 
 exit

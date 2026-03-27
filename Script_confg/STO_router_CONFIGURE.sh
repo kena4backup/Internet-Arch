@@ -74,6 +74,8 @@ set community 6:100
 route-map IN_AS3_PROVIDER permit 20
 set local-preference 100
 
+no route-map IN_AS3_PROVIDER deny 30
+
 
 route-map OUT_AS3_PROVIDER permit 10
 match ip address prefix-list ALLOWED_TAG_TO_PROVIDER
@@ -84,7 +86,7 @@ set as-path prepend 6 6 6
 
 route-map OUT_AS3_PROVIDER permit 30
 match ip address prefix-list ALLOWED_PREFIX_TO_PROVIDER
- set metric 55
+ set metric 550
 
 exit
 
