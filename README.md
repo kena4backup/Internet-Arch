@@ -9,6 +9,4 @@ These files are provided for demonstration purposes to showcase:
 
 The full project environment consists of 8 interconnected routers and an Open vSwitch Layer-2, which were managed as part of the University of Kassel "Mini-Internet" project.
 
-![AS-Level Topology of the Mini-Internet](topology.png){width=80%}
-
-[cite_start]**Note on Configuration:** The scripts provided (DUS, FRA, etc.) are partial samples of the full 8-router topology shown above[cite: 63, 259].
+![AS-Level Topology of the Mini-Internet](topology.png)
