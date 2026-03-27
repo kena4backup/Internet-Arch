@@ -7,6 +7,6 @@ These files are provided for demonstration purposes to showcase:
 * **Policy Logic:** Representative examples of BGP Route-Maps and OSPF weight configurations.
 * **Role-Based Design:** Configuration patterns for specific network roles, such as IXP Peering at FRA or Transit at DUS.
 
-The full project environment consists of 8 interconnected routers and an Open vSwitch Layer-2, which were managed as part of the University of Kassel "Mini-Internet" project.
+The full project environment consists of 8 interconnected routers and an Open vSwitch Layer-2.
 
 ![AS-Level Topology of the Mini-Internet](topology.png)
